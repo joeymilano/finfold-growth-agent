@@ -1,0 +1,22 @@
+[Unit]
+Description=Finfold WeChat fixed-IP API egress
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+EnvironmentFile=/opt/finfold/shared/.env.wechat-egress
+ExecStart=/usr/local/bin/node /opt/finfold/wechat-egress/wechat-egress.mjs
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+MemoryMax=192M
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

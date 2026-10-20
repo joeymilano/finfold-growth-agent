@@ -1,0 +1,7 @@
+node_modules/
+miniprogram/**/*.js
+miniprogram/**/*.js.map
+
+# AI-mode APIs are authored JavaScript, not TypeScript build output.
+!miniprogram/skills/agent/index.js
+!miniprogram/skills/agent/apis/*.js

@@ -1,0 +1,145 @@
+{
+  "apis": [
+    {
+      "name": "get_today_opportunities",
+      "description": "获取今天值得写的选题机会（AI 打分匹配用户业务）",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "window": {
+            "type": "string",
+            "enum": [
+              "4h",
+              "24h",
+              "7d"
+            ],
+            "description": "时间窗口，默认 24h"
+          }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    {
+      "name": "get_opportunity_detail",
+      "description": "获取一条机会的完整详情（为什么是现在/和你有关/证据来源/切入角度）",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "机会 UUID"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    {
+      "name": "generate_platform_draft",
+      "description": "为选题生成单平台草稿（公众号/小红书/朋友圈）。消耗 3 点用户额度，调用前必须告知用户",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "opportunity",
+              "free"
+            ]
+          },
+          "opportunityId": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string",
+            "enum": [
+              "wechat",
+              "xiaohongshu",
+              "moments"
+            ]
+          },
+          "topic": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "fact": {
+                "type": "string"
+              },
+              "angle": {
+                "type": "string"
+              },
+              "keywords": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 24
+                },
+                "maxItems": 8
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "confirmed": {
+            "type": "boolean",
+            "const": true,
+            "description": "用户已明确同意消耗 3 点额度"
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 100,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "description": "本次生成唯一标识；失败重试使用同一标识，新一版使用新标识"
+          }
+        },
+        "required": [
+          "source",
+          "platform",
+          "topic",
+          "confirmed",
+          "requestId"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    {
+      "name": "get_draft",
+      "description": "查询当前用户草稿状态和正文，直到 ready 或 failed。pending 时不要重复创建。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "创建接口返回的草稿 ID"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    }
+  ]
+}
