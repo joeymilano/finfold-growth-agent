@@ -270,7 +270,7 @@ describe("Cloudflare runtime support", () => {
     expect(packageJson.devDependencies["@opennextjs/cloudflare"]).toBeTruthy();
     expect(packageJson.devDependencies["@cloudflare/next-on-pages"]).toBeUndefined();
     expect(packageJson.scripts["build:cf"]).toBe("node scripts/build-cloudflare.mjs");
-    expect(cloudflareBuild).toContain('["opennextjs-cloudflare", "build"]');
+    expect(cloudflareBuild).toContain('"--dangerouslyUseUnsupportedNextVersion"');
     expect(cloudflareBuild).toContain('"NEXT_PUBLIC_SUPABASE_URL"');
     expect(cloudflareBuild).toContain('"NEXT_PUBLIC_SUPABASE_ANON_KEY"');
     expect(wrangler).toContain('main = "worker.ts"');

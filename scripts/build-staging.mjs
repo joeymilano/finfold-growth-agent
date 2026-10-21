@@ -46,7 +46,7 @@ export function buildStagingEnvironment(configSource, baseEnvironment = {}) {
 
 export function runStagingBuild(root = defaultRoot, spawn = spawnSync) {
   const configSource = readFileSync(resolve(root, "wrangler.staging.toml"), "utf8");
-  const result = spawn("npx", ["opennextjs-cloudflare", "build"], {
+  const result = spawn("npx", ["opennextjs-cloudflare", "build", "--dangerouslyUseUnsupportedNextVersion"], {
     cwd: root,
     env: buildStagingEnvironment(configSource, process.env),
     stdio: "inherit"

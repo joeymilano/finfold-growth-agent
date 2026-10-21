@@ -56,7 +56,7 @@ describe("staging build environment", () => {
     expect(status).toBe(0);
     expect(invocation).toMatchObject({
       command: "npx",
-      args: ["opennextjs-cloudflare", "build"],
+      args: ["opennextjs-cloudflare", "build", "--dangerouslyUseUnsupportedNextVersion"],
       environment: {
         FINFOLD_DEPLOYMENT_ENV: "staging",
         NEXT_PUBLIC_APP_URL: expect.stringContaining("staging")

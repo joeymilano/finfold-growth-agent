@@ -58,7 +58,10 @@ export function buildCloudflareEnvironment(configSource, baseEnvironment = proce
 
 export function runCloudflareBuild(root = defaultRoot, spawn = spawnSync) {
   const configSource = readFileSync(resolve(root, "wrangler.toml"), "utf8");
-  const result = spawn("npx", ["opennextjs-cloudflare", "build"], {
+  // @opennextjs/cloudflare 1.20+ refuses Next.js releases past their
+  // 2-year support window (we ship 15.5.27). Use the documented escape
+  // hatch until the Next 16 migration happens.
+  const result = spawn("npx", ["opennextjs-cloudflare", "build", "--dangerouslyUseUnsupportedNextVersion"], {
     cwd: root,
     env: buildCloudflareEnvironment(configSource),
     stdio: "inherit"
