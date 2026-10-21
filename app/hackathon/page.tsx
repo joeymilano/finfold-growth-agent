@@ -17,7 +17,21 @@ const HOW = [
   "scripts/verify-nebius.mjs proves it live: model listing, a 902ms chat round-trip with reasoning tokens, and the structured-JSON path — recorded in docs/nebius-verification.md."
 ];
 
-export default function HackathonDemoPage() {
+/** Accepts a bare YouTube id or a full watch/share URL; embeds nocookie. */
+function parseYouTubeId(raw: string | undefined): string | null {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  if (/^[A-Za-z0-9_-]{11}$/.test(trimmed)) return trimmed;
+  const match = trimmed.match(/(?:watch\?v=|youtu\.be\/|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+export default async function HackathonDemoPage({
+  searchParams
+}: {
+  searchParams: Promise<{ v?: string }>;
+}) {
+  const videoId = parseYouTubeId((await searchParams).v);
   return (
     <div className="flex min-h-screen flex-col bg-bg">
       <header className="sticky top-0 z-10 border-b border-hairline bg-surface/80 backdrop-blur">
@@ -66,16 +80,25 @@ export default function HackathonDemoPage() {
           <HackathonTryItDemo placeholder="e.g. We just shipped dark mode and 2x faster exports in our note app" />
         </section>
 
-        <section className="panel mt-10 flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <div>
-            <h2 className="text-sm font-semibold text-fg">Full walkthrough (≤3 min)</h2>
-            <p className="mt-1 text-xs leading-5 text-fg-muted">
-              Product tour video — replace this block with the YouTube embed after upload.
+        <section className="panel mt-10 p-5 sm:p-6">
+          <h2 className="text-sm font-semibold text-fg">Full walkthrough (≤3 min)</h2>
+          {videoId ? (
+            <div className="mt-4 aspect-video w-full overflow-hidden rounded-xl border border-hairline">
+              <iframe
+                className="h-full w-full"
+                src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+                title="Finfold hackathon walkthrough"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <p className="mt-2 text-xs leading-5 text-fg-muted">
+              Walkthrough video — append <code className="rounded bg-surface-2 px-1.5 py-0.5">?v=YOUTUBE_ID</code> to this
+              URL once uploaded.
             </p>
-          </div>
-          <span className="inline-flex items-center gap-2 rounded-xl border border-hairline px-4 py-2 text-xs text-fg-muted">
-            Video placeholder
-          </span>
+          )}
         </section>
 
         <div className="mt-10 flex flex-wrap gap-3">

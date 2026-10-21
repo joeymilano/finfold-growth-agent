@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Check, Copy, Loader2, Sparkles } from "lucide-react";
 
 type DemoResult = {
   x_hook: string;
@@ -18,11 +18,18 @@ type DemoResult = {
  * /api/hackathon/demo. No account, no streaming — judges can feel the
  * model's latency and tone directly.
  */
-export function HackathonTryItDemo({ placeholder }: { placeholder: string }) {
+const DEFAULT_EXAMPLES = [
+  "Shipped dark mode + 2x faster exports",
+  "AI 自动整理上线,协作白板不再混乱",
+  "Free plan now includes team workspaces"
+];
+
+export function HackathonTryItDemo({ placeholder, examples = DEFAULT_EXAMPLES }: { placeholder: string; examples?: string[] }) {
   const [idea, setIdea] = useState("");
   const [pending, setPending] = useState(false);
   const [result, setResult] = useState<DemoResult | null>(null);
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState("");
 
   async function run() {
     if (pending || idea.trim().length < 8) return;
@@ -48,11 +55,31 @@ export function HackathonTryItDemo({ placeholder }: { placeholder: string }) {
     }
   }
 
+  function copy(text: string, tag: string) {
+    void navigator.clipboard?.writeText(text).then(() => {
+      setCopied(tag);
+      setTimeout(() => setCopied(""), 1600);
+    });
+  }
+
   return (
     <div className="panel mt-6 p-5 sm:p-6">
       <label htmlFor="hackathon-demo-idea" className="text-sm font-medium text-fg">
         Try the model live — describe a product update
       </label>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {examples.map(example => (
+          <button
+            key={example}
+            type="button"
+            onClick={() => setIdea(example)}
+            className="focus-ring inline-flex items-center gap-1.5 rounded-full border border-hairline px-3 py-1.5 text-xs text-fg-muted transition-colors hover:border-hairline-strong hover:text-fg"
+          >
+            <Sparkles className="h-3 w-3 text-brand" aria-hidden />
+            {example}
+          </button>
+        ))}
+      </div>
       <textarea
         id="hackathon-demo-idea"
         value={idea}
@@ -85,11 +112,23 @@ export function HackathonTryItDemo({ placeholder }: { placeholder: string }) {
       {result ? (
         <div className="mt-5 grid gap-3">
           <div className="rounded-xl border border-hairline bg-surface-2 p-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">X hook</p>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">X hook</p>
+              <button type="button" onClick={() => copy(result.x_hook, "x")} className="focus-ring inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] text-fg-muted hover:text-fg">
+                {copied === "x" ? <Check className="h-3 w-3 text-action" aria-hidden /> : <Copy className="h-3 w-3" aria-hidden />}
+                {copied === "x" ? "Copied" : "Copy"}
+              </button>
+            </div>
             <p className="mt-2 text-sm leading-6 text-fg">{result.x_hook}</p>
           </div>
           <div className="rounded-xl border border-hairline bg-surface-2 p-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">LinkedIn opener</p>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand">LinkedIn opener</p>
+              <button type="button" onClick={() => copy(result.linkedin_opener, "li")} className="focus-ring inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] text-fg-muted hover:text-fg">
+                {copied === "li" ? <Check className="h-3 w-3 text-action" aria-hidden /> : <Copy className="h-3 w-3" aria-hidden />}
+                {copied === "li" ? "Copied" : "Copy"}
+              </button>
+            </div>
             <p className="mt-2 text-sm leading-6 text-fg">{result.linkedin_opener}</p>
           </div>
           <p className="font-mono text-[10px] uppercase tracking-wider text-fg-muted">
