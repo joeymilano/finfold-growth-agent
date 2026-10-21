@@ -289,7 +289,10 @@ describe("dashboard copy and headline layout", () => {
     })));
 
     render(<AgentAutomationCenter />);
-    fireEvent.change(screen.getByPlaceholderText("例如：分析我的账号，告诉我下一步"), {
+    // The center mounts its input after its async session bootstrap settles;
+    // wait for it instead of querying synchronously (CI machines are slower).
+    const promptInput = await screen.findByPlaceholderText("例如：分析我的账号，告诉我下一步");
+    fireEvent.change(promptInput, {
       target: { value: "帮我调研小红书选题" }
     });
     fireEvent.click(screen.getByRole("button", { name: "发送" }));
