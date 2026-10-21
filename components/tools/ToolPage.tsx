@@ -58,8 +58,8 @@ export function ToolPage({
   const linksToFounderGuide = founderMarketingToolSlugs.has(config.slug);
 
   return (
-    <div data-landing-style="almanac">
-      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public workspace-tool-page relative min-h-screen overflow-hidden bg-bg text-fg">
+    <>
+      <main data-workspace-theme data-workspace-canvas className="workspace-public workspace-tool-page relative min-h-screen overflow-hidden bg-bg text-fg">
 
         <PublicSiteHeader locale={locale} localeHref={localeHref} />
 
@@ -176,6 +176,6 @@ export function ToolPage({
         </section>
       </main>
       <SiteFooter locale={locale} />
-    </div>
+    </>
   );
 }

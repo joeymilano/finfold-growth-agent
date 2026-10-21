@@ -4,10 +4,9 @@ import Link from "next/link";
 import { isCnDeployment, publicSiteHref, CN_PRODUCT_NAME, CN_DESCRIPTION, CN_OPERATOR } from "@/lib/site-policy";
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check, ClipboardPaste, Image as ImageIcon, Radar, RefreshCcw, Rocket, ShieldCheck } from "@/components/ui/icons";
-import { Pause, Play } from "lucide-react";
 import { SiteFooter } from "@/components/landing/SiteFooter";
+import { LandingHeroVideo } from "@/components/landing/LandingHeroVideo";
 import { CurrentOpsCostCalculator } from "@/components/landing/CurrentOpsCostCalculator";
-import { InkArrow, InkUnderline, VermilionSeal } from "@/components/landing/almanac-marks";
 import { PublicSiteHeader } from "@/components/marketing/PublicSiteHeader";
 import { MarketingResourceLink } from "@/components/marketing/MarketingResourceLink";
 import { TrackedCtaLink, rememberPublicLocale } from "@/components/marketing/TrackedCtaLink";
@@ -19,99 +18,23 @@ import type { Locale } from "@/lib/i18n";
 import { captureEvent } from "@/lib/posthog";
 import { toolPages } from "@/lib/tool-pages";
 import { getLandingFeaturedBlogPosts } from "@/lib/blog-posts";
+import { PLAN_CREDITS } from "@/lib/payment/types";
 import { usePublicAuthUser } from "@/components/marketing/LandingUserAvatar";
 import { buildAuthHref } from "@/lib/auth-return";
 import { buildPlanApplicationHref, getBillingPlanAcquisition } from "@/lib/billing-plan-acquisition";
 
 const APP_ENTRY_HREF = "/workbench?start=1";
 const ACCOUNT_HEALTH_HREF = "/operations/account-health";
-
-/** The moss reel — a framed film plate, not a background wash. Poster stays
- *  when motion is reduced or the video fails; playback is user-toggleable. */
-export function AlmanacFilm({ locale }: { locale: Locale }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [motionAllowed, setMotionAllowed] = useState(false);
-  const [paused, setPaused] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
-  useEffect(() => {
-    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setMotionAllowed(!preference.matches);
-    update();
-    preference.addEventListener("change", update);
-    return () => preference.removeEventListener("change", update);
-  }, []);
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !motionAllowed || failed || paused) return;
-    const play = () => void video.play().catch(() => setPaused(true));
-    if (document.visibilityState === "visible") play();
-    document.addEventListener("visibilitychange", play);
-    return () => document.removeEventListener("visibilitychange", play);
-  }, [motionAllowed, failed, paused]);
-  const en = locale === "en";
-  return (
-    <figure className="almanac-frame almanac-rise-4">
-      <InkArrow className="almanac-frame-arrow" width={82} />
-      <span className="almanac-frame-tab">
-        {en ? "Field reel №1" : "增长实录 №1"}
-      </span>
-      <div className="almanac-frame-media">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/media/hero-atmosphere-poster.jpg" alt={en ? "Moss growing over a workbench" : "苔藓在工作台上生长"} />
-        {motionAllowed && !failed ? (
-          <video
-            ref={videoRef}
-            src="/media/hero-atmosphere.mp4"
-            muted playsInline loop autoPlay preload="none"
-            className={loaded ? "is-loaded" : ""}
-            onLoadedData={() => setLoaded(true)}
-            onError={() => setFailed(true)}
-          />
-        ) : null}
-        {motionAllowed && !failed ? (
-          <button
-            type="button"
-            className="almanac-frame-toggle focus-ring"
-            onClick={() => {
-              setPaused(value => !value);
-              const video = videoRef.current;
-              if (video) video.paused ? void video.play().catch(() => undefined) : video.pause();
-            }}
-            aria-label={paused ? (en ? "Play reel" : "播放胶片") : en ? "Pause reel" : "暂停胶片"}
-            aria-pressed={paused}
-          >
-            {paused ? <Play aria-hidden className="h-3.5 w-3.5" /> : <Pause aria-hidden className="h-3.5 w-3.5" />}
-          </button>
-        ) : null}
-      </div>
-      <figcaption className="almanac-frame-caption">
-        <span>{en ? "Growth, compiled — not hacked overnight" : "增长是长出来的，不是一夜刷出来的"}</span>
-        <span>{en ? "35mm · moss" : "35mm · 苔藓"}</span>
-      </figcaption>
-    </figure>
-  );
-}
-
 const copy = {
   zh: {
     hero: {
       kicker: "你的第一位 AI 增长运营员工",
-      mastheadLeft: "Finfold · 增长年鉴",
-      mastheadRight: "VOL.01 — 流量到哪，生意就到哪",
-      titleA: "增长骇客，",
-      titleEm: "为你打工。",
-      sub: "一段更新，变成两份发布稿。贴入内容，选择平台，检查后即可使用。",
-      subMark: "两份发布稿",
+      titleA: "它盯住你的增长",
+      titleEm: "每一步都经你确认",
+      sub: "一段更新，变成两份发布稿。\n贴入内容，选择平台，检查后即可使用。",
       valuePoints: ["机会自动发现", "内容一次备好", "评论即时回复", "结果自动记录"],
       primaryCta: "试做两份发布稿",
-      secondaryCta: "诊断我的账号",
-      stats: [
-        { value: "14", accent: "", label: "个平台 · 原生尺寸" },
-        { value: "1×", accent: "", label: "一条内容 · 一次生产" },
-        { value: "90s", accent: "<", label: "看到第一份初稿" },
-        { value: "50", accent: "", label: "免费创作点 / 每月" }
-      ]
+      secondaryCta: "诊断我的账号"
     },
     productTitle: "把下一步，准备好",
     productBody: "内容、品牌和结果，在同一个工作台。",
@@ -139,21 +62,12 @@ const copy = {
   en: {
     hero: {
       kicker: "YOUR FIRST AI MARKETING EMPLOYEE",
-      mastheadLeft: "Finfold · The Growth Almanac",
-      mastheadRight: "VOL.01 — GO WHERE THE TRAFFIC IS",
-      titleA: "A growth hacker,",
-      titleEm: "on your payroll.",
-      sub: "One update becomes two platform-native drafts. Bring your content, choose your channels, review, and ship.",
-      subMark: "two platform-native drafts",
+      titleA: "It watches your growth",
+      titleEm: "You approve every step",
+      sub: "One update. Two drafts ready to review.\nBring your content, choose your channels, and make it yours.",
       valuePoints: ["Opportunities surfaced", "Drafts ready to ship", "Comments answered", "Results recorded"],
       primaryCta: "Create two drafts",
-      secondaryCta: "Diagnose my account",
-      stats: [
-        { value: "14", accent: "", label: "platforms · native sizes" },
-        { value: "1×", accent: "", label: "one story · one pass" },
-        { value: "90s", accent: "<", label: "to your first draft" },
-        { value: "50", accent: "", label: "free Credits / month" }
-      ]
+      secondaryCta: "Diagnose my account"
     },
     productTitle: "Your next step, ready",
     productBody: "Content, brand context, and results in one workspace.",
@@ -224,51 +138,22 @@ export function LandingPage({ initialLocale, localeHref }: { initialLocale?: Loc
   const market = marketForLocale(locale);
 
   return <>
-    <div data-landing-style="almanac" data-locale={locale}>
     <main data-workspace-theme data-workspace-canvas className="workspace-public workspace-landing min-h-screen text-fg">
       <PublicSiteHeader locale={locale} localeHref={localeHref} trialEntry sticky scrolled={scrolled} />
-      <section className="workspace-landing-hero">
-        <div className="almanac-hero">
-          <header className="almanac-masthead almanac-rise-1">
-            <span><strong>{c.hero.mastheadLeft}</strong></span>
-            <span>{c.hero.mastheadRight}</span>
-          </header>
-          <div className="almanac-hero-grid">
-            <div>
-              <div className="almanac-kicker-row almanac-rise almanac-rise-1">
-                <VermilionSeal character="增" size={44} />
-                <p className="almanac-kicker">{c.hero.kicker}</p>
-              </div>
-              <h1 className="almanac-hero-title almanac-rise almanac-rise-2">
-                {c.hero.titleA}<br />
-                <span className="almanac-vermilion">{c.hero.titleEm}</span>
-              </h1>
-              <p className="almanac-sub almanac-rise almanac-rise-3">
-                {c.hero.sub.split(c.hero.subMark)[0]}
-                <span className="almanac-mark-wrap">
-                  <strong>{c.hero.subMark}</strong>
-                  <InkUnderline />
-                </span>
-                {c.hero.sub.split(c.hero.subMark)[1]}
-              </p>
-              <div className="almanac-cta-row almanac-rise almanac-rise-3">
-                <TrackedCtaLink href={APP_ENTRY_HREF} sourceType="landing" sourceSurface="hero" ctaId="landing_hero_first_task" destination="workbench" locale={locale} className="btn-primary focus-ring min-h-12 px-6">{c.hero.primaryCta}<ArrowRight className="h-4 w-4" /></TrackedCtaLink>
-                <TrackedCtaLink href={memberHref(ACCOUNT_HEALTH_HREF)} sourceType="landing" sourceSurface="hero" ctaId="landing_hero_account_health" destination="account_health" locale={locale} className="btn-ghost focus-ring min-h-12 px-5">{c.hero.secondaryCta}</TrackedCtaLink>
-              </div>
-              <ul className="almanac-proof almanac-rise almanac-rise-4">
-                {c.hero.valuePoints.map(point => <li key={point}><Check className="h-3.5 w-3.5 text-action" />{point}</li>)}
-              </ul>
-            </div>
-            <AlmanacFilm locale={locale} />
-          </div>
-          <dl className="almanac-stats almanac-rise almanac-rise-5">
-            {c.hero.stats.map(stat => (
-              <div className="almanac-stat" key={stat.label}>
-                <b>{stat.accent}<em>{stat.value}</em></b>
-                <span>{stat.label}</span>
-              </div>
-            ))}
-          </dl>
+      <section className="workspace-landing-hero text-center">
+        <LandingHeroVideo locale={locale} />
+        <div className="workspace-hero-content mx-auto max-w-6xl px-5">
+        <p className="workspace-hero-kicker">{c.hero.kicker}</p>
+        <h1 className="mt-6 text-balance">{c.hero.titleA}<br /><span className="text-fg-muted">{c.hero.titleEm}</span></h1>
+        <p className="mx-auto mt-6 max-w-xl whitespace-pre-line text-base leading-7 text-fg-muted">{c.hero.sub}</p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <TrackedCtaLink href={APP_ENTRY_HREF} sourceType="landing" sourceSurface="hero" ctaId="landing_hero_first_task" destination="workbench" locale={locale} className="btn-primary focus-ring min-h-12 px-6">{c.hero.primaryCta}<ArrowRight className="h-4 w-4" /></TrackedCtaLink>
+          <TrackedCtaLink href={memberHref(ACCOUNT_HEALTH_HREF)} sourceType="landing" sourceSurface="hero" ctaId="landing_hero_account_health" destination="account_health" locale={locale} className="btn-ghost focus-ring min-h-12 px-5">{c.hero.secondaryCta}</TrackedCtaLink>
+        </div>
+        <p className="mt-4 text-xs text-fg-muted">{en ? `${PLAN_CREDITS.free} free monthly Credits · No card required` : `免费账户每月 ${PLAN_CREDITS.free} 点 · 无需银行卡`}</p>
+        <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-7 gap-y-3 text-xs text-fg-muted">
+          {c.hero.valuePoints.map(point => <span key={point} className="inline-flex items-center gap-2"><Check className="h-3.5 w-3.5 text-action" />{point}</span>)}
+        </div>
         </div>
       </section>
       <section id="product" className="workspace-public-section mx-auto max-w-6xl px-5">
@@ -334,6 +219,5 @@ export function LandingPage({ initialLocale, localeHref }: { initialLocale?: Loc
       <section className="workspace-public-section mx-auto max-w-4xl px-5 pb-24 text-center"><h2 className="text-balance text-3xl font-medium tracking-tight">{c.finalTitle}</h2><TrackedCtaLink href={APP_ENTRY_HREF} sourceType="landing" sourceSurface="final_cta" ctaId="landing_closing_primary" destination="workbench" locale={locale} className="btn-primary focus-ring mt-7 min-h-12 px-6">{c.hero.primaryCta}<ArrowRight className="h-4 w-4" /></TrackedCtaLink></section>
     </main>
     <SiteFooter locale={locale} />
-    </div>
   </>;
 }

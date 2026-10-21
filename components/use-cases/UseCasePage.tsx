@@ -25,8 +25,8 @@ export function UseCasePage({
   const guide = config.searchGuide;
 
   return (
-    <div data-landing-style="almanac">
-      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
+    <>
+      <main data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
         <MarketingLandingTracker contentType="use_case" contentSlug={config.slug} locale={locale} />
         <PublicSiteHeader
           locale={locale}
@@ -290,6 +290,6 @@ export function UseCasePage({
         </section>
       </main>
       <SiteFooter locale={locale} />
-    </div>
+    </>
   );
 }

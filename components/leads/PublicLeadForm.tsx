@@ -221,7 +221,7 @@ export function PublicLeadForm({
   }
 
   return (
-    <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen text-fg">
+    <main data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen text-fg">
       <Script
         src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
         strategy="afterInteractive"

@@ -222,10 +222,10 @@ describe("public SEO surface", () => {
     expect(zhHomeMetadata.title).toBe("AI 增长运营员工｜替你自动经营增长 | Finfold");
 
     const landingView = readFileSync(join(process.cwd(), "components/landing/LandingPage.tsx"), "utf8");
-    expect(landingView).toContain('titleA: "增长骇客，"');
-    expect(landingView).toContain('titleEm: "为你打工。"');
-    expect(landingView).toContain('titleA: "A growth hacker,"');
-    expect(landingView).toContain('titleEm: "on your payroll."');
+    expect(landingView).toContain('titleA: "它盯住你的增长"');
+    expect(landingView).toContain('titleEm: "每一步都经你确认"');
+    expect(landingView).toContain('titleA: "It watches your growth"');
+    expect(landingView).toContain('titleEm: "You approve every step"');
     expect(landingView).toContain('const APP_ENTRY_HREF = "/workbench?start=1"');
     expect(landingView).toContain('ctaId="landing_hero_first_task"');
     expect(landingView).toContain('kicker: "YOUR FIRST AI MARKETING EMPLOYEE"');

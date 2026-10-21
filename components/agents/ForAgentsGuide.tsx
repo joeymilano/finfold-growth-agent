@@ -88,9 +88,9 @@ export function ForAgentsGuide() {
   const locale = useLocale();
   const c = copy[locale];
 
-  return <div data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public flex min-h-screen flex-col bg-bg text-fg">
+  return <div data-workspace-theme data-workspace-canvas className="workspace-public flex min-h-screen flex-col bg-bg text-fg">
     <PublicSiteHeader locale={locale} sticky />
-    <main data-landing-style="almanac" className="mx-auto w-full max-w-5xl flex-1 px-5 py-16 md:py-24">
+    <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-16 md:py-24">
       <p className="eyebrow inline-flex items-center gap-2"><Bot className="h-4 w-4 text-brand" />MCP · STREAMABLE HTTP</p>
       <h1 className="mt-5 max-w-4xl text-balance text-4xl font-bold tracking-tight sm:text-6xl">{c.hero}</h1>
       <p className="mt-6 max-w-2xl text-lg leading-8 text-fg-muted">{c.intro}</p>

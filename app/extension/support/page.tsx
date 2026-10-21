@@ -14,8 +14,8 @@ export default async function ExtensionSupportPage({ searchParams }: { searchPar
   const locale = zh ? "zh" : "en";
   const toggleHref = zh ? "/extension/support?ui_locale=en" : "/extension/support";
   return (
-    <div data-landing-style="almanac">
-      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen bg-bg text-fg">
+    <>
+      <main data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen bg-bg text-fg">
         <MarketingLandingTracker contentType="other" locale={locale} />
         <PublicSiteHeader locale={locale} localeHref={toggleHref} />
         <div className="px-5 pb-20 pt-10 sm:pt-14">
@@ -35,6 +35,6 @@ export default async function ExtensionSupportPage({ searchParams }: { searchPar
         </div>
       </main>
       <SiteFooter locale={locale} />
-    </div>
+    </>
   );
 }

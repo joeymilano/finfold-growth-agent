@@ -28,7 +28,7 @@ const STEPS = [
 
 export default function WorkBuddyLandingPage() {
   return (
-    <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
+    <main data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
       <MarketingLandingTracker contentType="other" contentSlug="workbuddy" locale="zh" />
 
       <PublicSiteHeader locale={"zh"} sticky />

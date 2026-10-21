@@ -11,8 +11,8 @@ export function UseCaseIndexView({ locale }: { locale: "zh" | "en" }) {
   const prefix = isEn ? "/en" : "";
 
   return (
-    <div data-landing-style="almanac">
-      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
+    <>
+      <main data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
         <MarketingLandingTracker contentType="use_cases_index" locale={locale} />
         <PublicSiteHeader locale={locale} localeHref={isEn ? "/use-cases" : "/en/use-cases"} />
 
@@ -80,6 +80,6 @@ export function UseCaseIndexView({ locale }: { locale: "zh" | "en" }) {
         </section>
       </main>
       <SiteFooter locale={locale} />
-    </div>
+    </>
   );
 }

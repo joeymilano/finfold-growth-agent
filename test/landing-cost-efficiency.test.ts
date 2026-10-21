@@ -7,8 +7,8 @@ describe("landing cost-and-efficiency story", () => {
 
   it("keeps the AI employee brand while leading with the employee loop and human confirmation", () => {
     expect(landing).toContain('kicker: "你的第一位 AI 增长运营员工"');
-    expect(landing).toContain('titleA: "增长骇客，"');
-    expect(landing).toContain('titleEm: "为你打工。"');
+    expect(landing).toContain('titleA: "它盯住你的增长"');
+    expect(landing).toContain('titleEm: "每一步都经你确认"');
     expect(landing).toContain('valuePoints: ["机会自动发现", "内容一次备好", "评论即时回复", "结果自动记录"]');
     expect(landing).toContain('primaryCta: "试做两份发布稿"');
     expect(landing).toContain('secondaryCta: "诊断我的账号"');

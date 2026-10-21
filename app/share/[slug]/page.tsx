@@ -69,7 +69,7 @@ export default async function SharedKitPage({ params }: PageParams) {
   const platformLabels = kit.outputs.map((output) => getLocalizedPlatformLabel(output.platform, locale)).join(" · ");
 
   return (
-    <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
+    <main data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
       <PublicSiteHeader locale={locale} sticky hideLocaleToggle />
 
       <div className="mx-auto max-w-4xl px-5 pb-16">

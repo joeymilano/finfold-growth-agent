@@ -183,8 +183,8 @@ export function BlogPostView({
   const platformLabel = isEn ? platformLabelEn[post.platform] ?? post.platform : post.platform;
 
   return (
-    <div data-landing-style="almanac">
-      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen overflow-hidden bg-bg text-fg">
+    <>
+      <main data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen overflow-hidden bg-bg text-fg">
 
         <PublicSiteHeader locale={locale} localeHref={localeHref} />
 
@@ -431,6 +431,6 @@ export function BlogPostView({
         </article>
       </main>
       <SiteFooter locale={locale} />
-    </div>
+    </>
   );
 }
