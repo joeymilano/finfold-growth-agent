@@ -1,5 +1,9 @@
 # Finfold
 
+> **运行在 NVIDIA Nemotron 上 — 由 Nebius Token Factory 提供服务。**
+> 为 [Nebius x NVIDIA 全球 AI 黑客松](https://nebiusglobalaihackathon.devpost.com) 构建;
+> [真机验证记录](./docs/nebius-verification.md) 含模型 ID、延迟与结构化 JSON 往返实测。
+
 [English README](./README.md)
 
 Finfold 是一个面向创始人、独立开发者和小型增长团队的 AI 增长运营员工：它盯住整个增长循环——发现内容机会、准备各平台的发布稿、通过 Chrome 扩展在评论区替你回复，并把每一步动作实际带来的点击、线索、注册和收入记录下来。

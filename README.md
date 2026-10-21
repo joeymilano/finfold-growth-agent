@@ -2,6 +2,11 @@
 
 [中文说明](./README.zh-CN.md)
 
+> **Runs on NVIDIA Nemotron — served by Nebius Token Factory.**
+> Built for the [Nebius x NVIDIA Global AI Hackathon](https://nebiusglobalaihackathon.devpost.com);
+> see the [live verification record](./docs/nebius-verification.md) for model IDs, latency, and a
+> structured-JSON round-trip on the exact checkpoint the app ships with.
+
 Finfold is an AI growth operator for founders, indie builders, and lean growth teams: it watches the growth loop — surfacing content opportunities, preparing platform-native drafts, answering comments in the browser through the Chrome extension, and recording what each action actually brought back (clicks, leads, signups, revenue).
 
 Instead of asking users to manually rewrite the same launch note for every channel and then lose the results in spreadsheets, Finfold combines product context, brand memory, channel rules, growth missions, and an AI agent workflow so a small team can move from "what happened in the product" to "what should we do next" — with every consequential action confirmed by a human.

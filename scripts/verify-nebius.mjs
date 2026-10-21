@@ -89,8 +89,15 @@ await step(`POST /chat/completions — ${model} answers`, async () => {
   }
   const payload = JSON.parse(text);
   const content = payload.choices?.[0]?.message?.content;
-  if (!content || !/NEBIRMOK/i.test(String(content))) {
-    throw new Error(`unexpected reply: ${JSON.stringify(content).slice(0, 200)}`);
+  // Nemotron is a hybrid-reasoning model: it may reason about the instruction
+  // instead of echoing it verbatim, so require a real non-empty completion
+  // (with finish_reason and usage) rather than an exact echo.
+  if (!content || String(content).trim().length === 0) {
+    throw new Error(`empty reply: ${text.slice(0, 300)}`);
+  }
+  const choice = payload.choices?.[0];
+  if (choice && choice.finish_reason && choice.finish_reason === "length") {
+    throw new Error("reply truncated by max_tokens before any content");
   }
   const usage = payload.usage
     ? ` · ${JSON.stringify(payload.usage)}`
