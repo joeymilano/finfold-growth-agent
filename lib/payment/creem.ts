@@ -229,7 +229,41 @@ export const creemProvider: PaymentProvider = {
 const CREDIT_PACK_IDS: CreditPackId[] = ["starter_pack", "standard_pack", "plus_pack", "pro_pack"];
 const CREDIT_PACK_MARKETS: PricingMarket[] = ["cn", "global"];
 
+// Eight per-product env vars exhausted the Worker's 128 text-binding limit,
+// so product ids now ship as ONE JSON secret, CREEM_CREDIT_PACK_PRODUCTS:
+//   {"cn":{"starter_pack":"prod_…",…},"global":{…}}
+// The per-product vars remain as a fallback so a rollout never breaks
+// checkout; delete the old secrets only after the JSON secret is live.
+let mergedCreditPackIds: Partial<Record<PricingMarket, Partial<Record<CreditPackId, string>>>> | null | undefined;
+
+function readMergedCreditPackIds() {
+  if (mergedCreditPackIds !== undefined) return mergedCreditPackIds;
+  const raw = process.env.CREEM_CREDIT_PACK_PRODUCTS?.trim();
+  if (!raw) {
+    mergedCreditPackIds = null;
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(raw) as Record<string, Record<string, unknown>>;
+    mergedCreditPackIds = Object.fromEntries(
+      CREDIT_PACK_MARKETS.map(market => [
+        market,
+        Object.fromEntries(
+          CREDIT_PACK_IDS.filter(packId => typeof parsed[market]?.[packId] === "string")
+            .map(packId => [packId, String(parsed[market][packId])])
+        )
+      ])
+    );
+  } catch {
+    // A malformed secret must degrade to the fallback vars, not break checkout.
+    mergedCreditPackIds = null;
+  }
+  return mergedCreditPackIds;
+}
+
 function getCreditPackProductId(packId: CreditPackId, market: PricingMarket): string | undefined {
+  const merged = readMergedCreditPackIds()?.[market]?.[packId];
+  if (merged) return merged;
   const envKey = CREEM_CREDIT_PACK_PRODUCT_ENV_MAP[market]?.[packId];
   return envKey ? process.env[envKey] : undefined;
 }
