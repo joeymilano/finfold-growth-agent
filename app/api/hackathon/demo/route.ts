@@ -14,7 +14,7 @@ import { getNebiusProvider } from "@/lib/nebius";
  */
 
 const DEMO_MODEL = "nvidia/nemotron-3-super-120b-a12b";
-const MAX_TOKENS = 1000;
+const MAX_TOKENS = 2400;
 
 type DemoReply = {
   x_hook: string;
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
           {
             role: "system",
             content:
-              "You are Finfold's growth copy engine. Reply with a single JSON object and nothing else: {\"x_hook\": string, \"linkedin_opener\": string}. x_hook: one scroll-stopping post hook for X (max 180 chars, no hashtags). linkedin_opener: a professional two-sentence post opener. Match the user's language."
+              "You are Finfold's growth copy engine. Be decisive: reason briefly, then reply with a single JSON object and nothing else: {\"x_hook\": string, \"linkedin_opener\": string}. x_hook: one scroll-stopping post hook for X (max 180 chars, no hashtags). linkedin_opener: a professional two-sentence post opener. Match the user's language."
           },
           { role: "user", content: `Product update to promote: ${idea}` }
         ],
