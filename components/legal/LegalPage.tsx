@@ -14,10 +14,10 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
   const locale = useLocale();
 
   return (
-    <div data-workspace-theme data-workspace-canvas className="workspace-public flex min-h-screen flex-col">
+    <div data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public flex min-h-screen flex-col">
       <PublicSiteHeader locale={locale} sticky />
 
-      <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-12">
+      <main data-landing-style="almanac" className="mx-auto w-full max-w-3xl flex-1 px-5 py-12">
         <h1 className="text-2xl font-bold text-fg sm:text-3xl">{doc.title[locale]}</h1>
         <p className="mt-2 text-sm text-fg-muted">{doc.description[locale]}</p>
 

@@ -21,8 +21,8 @@ export function ToolsIndexView({ locale }: { locale: Locale }) {
   }, [locale]);
 
   return (
-    <>
-      <main data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen overflow-hidden bg-bg text-fg">
+    <div data-landing-style="almanac">
+      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen overflow-hidden bg-bg text-fg">
         <MarketingLandingTracker contentType="tools_index" locale={locale} />
 
         <PublicSiteHeader locale={locale} localeHref={isEn ? "/tools" : "/en/tools"} />
@@ -113,6 +113,6 @@ export function ToolsIndexView({ locale }: { locale: Locale }) {
         </section>
       </main>
       <SiteFooter locale={locale} />
-    </>
+    </div>
   );
 }

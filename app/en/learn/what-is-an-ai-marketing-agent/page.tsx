@@ -152,12 +152,12 @@ function buildSchema() {
 
 export default function WhatIsAnAiMarketingAgentPage() {
   return (
-    <>
+    <div data-landing-style="almanac">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildSchema()) }}
       />
-      <main data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
+      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
         <MarketingLandingTracker contentType="other" contentSlug="what-is-an-ai-marketing-agent" locale="en" />
         <PublicSiteHeader locale="en" hideLocaleToggle />
 
@@ -251,6 +251,6 @@ export default function WhatIsAnAiMarketingAgentPage() {
         </article>
       </main>
       <SiteFooter locale="en" />
-    </>
+    </div>
   );
 }

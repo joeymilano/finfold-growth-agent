@@ -42,7 +42,7 @@ export default async function LeadToolPage({ params }: PageParams) {
   }
 
   return (
-    <main data-workspace-theme data-workspace-canvas className="min-h-screen">
+    <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="min-h-screen">
       <LeadToolRuntime spec={tool.spec} slug={tool.slug} mode="public" />
     </main>
   );

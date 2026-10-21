@@ -83,7 +83,7 @@ export function LeadToolRuntime({
   }
 
   return (
-    <div data-workspace-theme data-lead-tool-mode={mode} className="workspace-public workspace-lead-runtime mx-auto w-full max-w-md px-4 pb-14 pt-8 sm:pt-12">
+    <div data-landing-style="almanac" data-workspace-theme data-lead-tool-mode={mode} className="workspace-public workspace-lead-runtime mx-auto w-full max-w-md px-4 pb-14 pt-8 sm:pt-12">
       {/* Owner brand is the hero; Finfold stays a closable footer credit. */}
       <header className="mb-6 flex items-center gap-3">
         {spec.brand.logo_url ? (

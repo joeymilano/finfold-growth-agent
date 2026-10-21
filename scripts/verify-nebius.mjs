@@ -77,10 +77,10 @@ await step(`POST /chat/completions — ${model} answers`, async () => {
     body: JSON.stringify({
       model,
       messages: [
-        { role: "system", content: "Reply with exactly: NEBIRMOK" },
+        { role: "system", content: "Answer with the single word: pong" },
         { role: "user", content: "ping" }
       ],
-      max_tokens: 200
+      max_tokens: 1200
     })
   });
   const text = await response.text();

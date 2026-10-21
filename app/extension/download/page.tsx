@@ -174,8 +174,8 @@ export default async function ExtensionDownloadPage({
       ];
 
   return (
-    <>
-      <main data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen bg-bg text-fg">
+    <div data-landing-style="almanac">
+      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen bg-bg text-fg">
         <MarketingLandingTracker contentType="other" locale={locale} />
         <PublicSiteHeader locale={locale} localeHref={toggleHref} />
 
@@ -334,6 +334,6 @@ export default async function ExtensionDownloadPage({
         </div>
       </main>
       <SiteFooter locale={locale} />
-    </>
+    </div>
   );
 }

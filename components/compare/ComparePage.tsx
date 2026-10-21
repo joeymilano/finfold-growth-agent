@@ -10,8 +10,8 @@ export function ComparePage({ config }: { config: ComparePageConfig }) {
   const relatedPages = comparePages.filter((page) => page.slug !== config.slug);
 
   return (
-    <>
-      <main data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
+    <div data-landing-style="almanac">
+      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public min-h-screen bg-bg">
         <MarketingLandingTracker contentType="other" contentSlug={config.slug} locale="en" />
         <PublicSiteHeader locale="en" hideLocaleToggle />
 
@@ -136,6 +136,6 @@ export function ComparePage({ config }: { config: ComparePageConfig }) {
         </section>
       </main>
       <SiteFooter locale="en" />
-    </>
+    </div>
   );
 }

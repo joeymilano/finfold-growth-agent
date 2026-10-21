@@ -408,7 +408,9 @@
    everything reads as printed matter.
    ================================================================== */
 
-[data-landing-style="almanac"] {
+[data-landing-style="almanac"],
+[data-workspace-theme][data-landing-style="almanac"],
+[data-theme="dark"] [data-workspace-theme][data-landing-style="almanac"] {
   color-scheme: light;
   --bg: 244 239 228;
   --surface: 250 247 240;
@@ -831,4 +833,17 @@
   .almanac-hero-title { font-size: clamp(40px, 11.5vw, 56px); }
   .almanac-stat { flex-basis: 50%; border-bottom: 1px solid rgb(var(--fg)); }
   .almanac-stat:nth-child(even) { border-right: 0; }
+}
+
+/* ---------- Interior public pages: display type follows the Almanac ------ */
+
+[data-landing-style="almanac"] h1 {
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-weight: 900;
+  letter-spacing: .01em;
+}
+[data-landing-style="almanac"] .font-display,
+[data-landing-style="almanac"] .font-display-zh {
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-weight: 900;
 }

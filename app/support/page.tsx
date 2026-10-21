@@ -72,7 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function SupportPage() {
   if (isCnDeployment) return (
-    <div data-workspace-theme data-workspace-canvas className="workspace-public flex min-h-screen flex-col">
+    <div data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public flex min-h-screen flex-col">
       <PublicSiteHeader locale="zh" sticky />
       <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-12 sm:py-16">
         <p className="text-sm text-brand">{CN_PRODUCT_NAME}</p>
@@ -89,7 +89,7 @@ export default async function SupportPage() {
   const c = supportCopy[locale];
   const supportHref = `mailto:${supportEmail}?subject=${encodeURIComponent(c.emailSubject)}`;
   return (
-    <div data-workspace-theme data-workspace-canvas className="workspace-public flex min-h-screen flex-col">
+    <div data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public flex min-h-screen flex-col">
       <PublicSiteHeader locale={locale} sticky hideLocaleToggle />
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-5 py-12 sm:py-16">

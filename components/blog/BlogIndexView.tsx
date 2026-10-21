@@ -30,8 +30,8 @@ export function BlogIndexView({ locale }: { locale: Locale }) {
   const leadVisual = getBlogVisual(leadPost.slug);
 
   return (
-    <>
-      <main data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen overflow-hidden bg-bg text-fg">
+    <div data-landing-style="almanac">
+      <main data-landing-style="almanac" data-workspace-theme data-workspace-canvas className="workspace-public relative min-h-screen overflow-hidden bg-bg text-fg">
         <MarketingLandingTracker contentType="blog_index" locale={locale} />
 
         <PublicSiteHeader locale={locale} localeHref={isEn ? "/blog" : "/en/blog"} />
@@ -179,6 +179,6 @@ export function BlogIndexView({ locale }: { locale: Locale }) {
         </section>
       </main>
       <SiteFooter locale={locale} />
-    </>
+    </div>
   );
 }
